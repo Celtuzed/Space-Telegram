@@ -3,7 +3,7 @@ import requests
 import os
 
 
-def get_Hubble_collection(Hubble_collection):
+def get_hubble_collection(Hubble_collection):
 
     filename = 'hc'
     url = f'http://hubblesite.org/api/v3/images/{Hubble_collection}'
@@ -30,7 +30,7 @@ def get_Hubble_collection(Hubble_collection):
                 image.thumbnail((1080, 1080))
                 image.save(f'images/thumbnail_{filename}_{id}_number-{image_number}.{images_formats[image_number]}')
 
-def get_Hubble_images(id):
+def get_hubble_images(id):
 
     filename = 'hi'
     url = f'http://hubblesite.org/api/v3/image/{id}'

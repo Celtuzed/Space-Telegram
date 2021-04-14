@@ -1,4 +1,4 @@
-from fetch_hubble import get_Hubble_collection, get_Hubble_images
+from fetch_hubble import get_hubble_collection, get_hubble_images
 from fetch_spacex import fetch_spacex_last_launch
 from instabot import Bot
 from PIL import Image
@@ -18,10 +18,10 @@ if __name__ == '__main__':
         fetch_spacex_last_launch()
     elif args.Hubble_id:
         id = args.Hubble_id
-        get_Hubble_images(id)
+        get_hubble_images(id)
     elif args.Hubble_collection:
         Hubble_collection = args.Hubble_collection
-        get_Hubble_collection(Hubble_collection)
+        get_hubble_collection(Hubble_collection)
     elif args.Instagram_post:
         bot = Bot()
         bot.login(username=os.getenv("USERNAME"), password=os.getenv("PASSWORD"))
