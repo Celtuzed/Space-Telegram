@@ -2,6 +2,16 @@ from PIL import Image
 import requests
 import os
 
+def get_images(id, url, image_number, images_formats, filename):
+    response = requests.get(url, verify=False)
+    response.raise_for_status()
+
+    if not url[-3:] == "pdf":
+        with open(f'images/{filename}_{id}_number-{image_number}.{images_formats[image_number]}', 'wb') as file:
+            file.write(response.content)
+        image = Image.open(f'images/{filename}_{id}_number-{image_number}.{images_formats[image_number]}')
+        image.thumbnail((1080, 1080))
+        image.save(f'images/thumbnail_{filename}_{id}_number-{image_number}.{images_formats[image_number]}')
 
 def get_hubble_collection(Hubble_collection):
 
@@ -20,15 +30,7 @@ def get_hubble_collection(Hubble_collection):
 
         for image_number, images in enumerate(image_files):
             url = f'https:{images["file_url"]}'
-            response = requests.get(url, verify=False)
-            response.raise_for_status()
-
-            if not url[-3:] == "pdf":
-                with open(f'images/{filename}_{id}_number-{image_number}.{images_formats[image_number]}', 'wb') as file:
-                    file.write(response.content)
-                image = Image.open(f'images/{filename}_{id}_number-{image_number}.{images_formats[image_number]}')
-                image.thumbnail((1080, 1080))
-                image.save(f'images/thumbnail_{filename}_{id}_number-{image_number}.{images_formats[image_number]}')
+            get_images(id, url, image_number, images_formats, filename)
 
 def get_hubble_images(id):
 
@@ -40,18 +42,11 @@ def get_hubble_images(id):
     response.raise_for_status()
     all_links = response.json()
     image_files = all_links["image_files"]
-
+    
     for image_number, images in enumerate(image_files):
 
         url = f'https:{images["file_url"]}'
-        response = requests.get(url, verify=False)
-        response.raise_for_status()
-        with open(f'images/{filename}_number-{image_number}.{images_formats[image_number]}', 'wb') as file:
-            file.write(response.content)
-        image = Image.open(f'images/{filename}_number-{image_number}.{images_formats[image_number]}')
-        image.thumbnail((1080, 1080))
-        image.save(f'images/thumbnail_{filename}_number-{image_number}.{images_formats[image_number]}')
-
+        get_images(id, url, image_number, images_formats, filename)
 
 def get_formats(url):
 
