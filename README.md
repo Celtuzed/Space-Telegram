@@ -6,11 +6,11 @@
 
 Для того чтобы использовать скрипт с выкладыванием фото в инстаграм нужно будет положить в `.env` файл пароль
 ```
-INSTAGAM_PASSWORD=Ваш_пароль
+  INSTAGAM_PASSWORD=Ваш_пароль
 ```
 и логин  
 ```
-INSTAGAM_USERNAME=Ваш_логин
+  INSTAGAM_USERNAME=Ваш_логин
 ```
 
 Python3 должен быть уже установлен.
@@ -25,19 +25,19 @@ Python3 должен быть уже установлен.
 `-hc/--Hubble_collection`; `-ip`/`--Instagram_post`
 
 ```
-main.py -sx/--SpaceX
+  main.py -sx/--SpaceX
 ```
 Скачивает последние фото из каталогов SpaceX.
 ```
-main.py -hi/--Hubble_id Id_картинки
+  main.py -hi/--Hubble_id Id_картинки
 ```
 Скачивает картинку по id с сервиса Hubble.
 ```
-main.py -hc/--Hubble_collection Название коллекции
+  main.py -hc/--Hubble_collection Название коллекции
 ```
 Скачивает сразу коллекцию картинок с сервиса Hubble.
 ```
-main.py -ip/--Instagram_post
+  main.py -ip/--Instagram_post
 ```
 Постит картинки из папки `images` в инстаграм.
 ### Цель проекта
