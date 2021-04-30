@@ -1,17 +1,8 @@
+from download_images import get_images
 from PIL import Image
 import requests
 import os
 
-def get_images(id, url, image_number, images_formats, filename):
-    response = requests.get(url, verify=False)
-    response.raise_for_status()
-
-    if not url[-3:] == "pdf":
-        with open(f'images/{filename}_{id}_number-{image_number}.{images_formats[image_number]}', 'wb') as file:
-            file.write(response.content)
-        image = Image.open(f'images/{filename}_{id}_number-{image_number}.{images_formats[image_number]}')
-        image.thumbnail((1080, 1080))
-        image.save(f'images/thumbnail_{filename}_{id}_number-{image_number}.{images_formats[image_number]}')
 
 def get_hubble_collection(Hubble_collection):
 
@@ -20,8 +11,8 @@ def get_hubble_collection(Hubble_collection):
     images_formats = get_formats_for_collections(url)[1]
     all_id = get_formats_for_collections(url)[0]
 
-    for id in all_id:
-        url = f"http://hubblesite.org/api/v3/image/{id}"
+    for image_id in all_id:
+        url = f"http://hubblesite.org/api/v3/image/{image_id}"
         response = requests.get(url)
         response.raise_for_status()
 
@@ -30,23 +21,23 @@ def get_hubble_collection(Hubble_collection):
 
         for image_number, images in enumerate(image_files):
             url = f'https:{images["file_url"]}'
-            get_images(id, url, image_number, images_formats, filename)
+            get_images(image_id, url, image_number, images_formats, filename)
 
-def get_hubble_images(id):
+def get_hubble_images(image_id):
 
     filename = 'hi'
-    url = f'http://hubblesite.org/api/v3/image/{id}'
+    url = f'http://hubblesite.org/api/v3/image/{image_id}'
     images_formats = get_formats(url)
 
     response = requests.get(url)
     response.raise_for_status()
     all_links = response.json()
     image_files = all_links["image_files"]
-    
+
     for image_number, images in enumerate(image_files):
 
         url = f'https:{images["file_url"]}'
-        get_images(id, url, image_number, images_formats, filename)
+        get_images(image_id, url, image_number, images_formats, filename)
 
 def get_formats(url):
 
@@ -75,11 +66,11 @@ def get_formats_for_collections(url):
 
     all_links = response.json()
 
-    for id in all_links:
-        all_id.append(id["id"])
+    for image_id in all_links:
+        all_id.append(image_id["id"])
 
-    for id in all_id:
-        url = f"http://hubblesite.org/api/v3/image/{id}"
+    for image_id in all_id:
+        url = f"http://hubblesite.org/api/v3/image/{image_id}"
         response = requests.get(url)
         response.raise_for_status()
 

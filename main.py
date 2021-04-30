@@ -17,8 +17,8 @@ if __name__ == '__main__':
     if args.SpaceX:
         fetch_spacex_last_launch()
     elif args.Hubble_id:
-        id = args.Hubble_id
-        get_hubble_images(id)
+        image_id = args.Hubble_id
+        get_hubble_images(image_id)
     elif args.Hubble_collection:
         Hubble_collection = args.Hubble_collection
         get_hubble_collection(Hubble_collection)
