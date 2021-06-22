@@ -1,10 +1,11 @@
+import argparse
+import os
+
 from fetch_hubble import get_hubble_collection, get_hubble_images
 from fetch_spacex import fetch_spacex_last_launch
 from instabot import Bot
 from PIL import Image
 import requests
-import argparse
-import os
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Скрипт скачивает картинки с SpaceX или Hubble, а также может постить картинки из папки в инстаграм')
@@ -28,4 +29,4 @@ if __name__ == '__main__':
         for pic in os.listdir('images'):
             bot.upload_photo(f"images/{pic}")
     else:
-        print("Введите 1 аргумент")
+        print("Введите 1 из аргументов")
