@@ -1,3 +1,6 @@
 .env
+env/
+images/
 config/
 images/
+cropped_images/

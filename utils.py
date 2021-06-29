@@ -4,7 +4,7 @@ from urllib.parse import unquote, urlsplit
 from PIL import Image
 import requests
 
-#Основная часть функций, которая скацивает картинки
+#Основная часть функций, которая скачивает картинки
 def get_images(image_id, url, image_number, images_formats, filename):
     response = requests.get(url, verify=False)
     response.raise_for_status()
@@ -19,24 +19,47 @@ def get_cropped_images_for_inst():
         image.thumbnail((1080, 1080))
         image.save(f'cropped_images/cropped_{pic}')
 
-#Получение форматов картинок вообще для -hc и -hi
-def get_formats(url):
+#Функция, которая непосредственно вытягивает форматы
+def get_formats(response, images_formats):
+
+    all_links = response.json()
+    image_files = all_links["image_files"]
+
+    for image_url in image_files:
+        images = unquote(f'https:{image_url["file_url"]}')
+        images_format = urlsplit(images).path[-3:]
+        images_formats.append(images_format)
+
+#Функция, которая получает картинки для hi
+def get_formats_for_hi(url):
 
     images_formats = []
 
     response = requests.get(url)
     response.raise_for_status()
 
-    all_links = response.json()
-    image_files = all_links["image_files"]
+    get_formats(response, images_formats)
 
-    for image_url in image_files:
-            images = unquote(f'https:{image_url["file_url"]}')
-            images_format = urlsplit(images).path[-3:]
-            images_formats.append(images_format)
     return images_formats
 
-#Получение ID для аргумента -hc
+#Функция, которая получает картинки для hc
+def get_formats_for_hc(url, all_id):
+
+    images_formats = []
+
+    response = requests.get(url)
+    response.raise_for_status()
+
+    for image_id in all_id:
+                url = f"http://hubblesite.org/api/v3/image/{image_id}"
+                response = requests.get(url)
+                response.raise_for_status()
+
+                get_formats(response, images_formats)
+
+    return images_formats
+
+#Получение ID
 def get_id(url):
 
     images_formats = []

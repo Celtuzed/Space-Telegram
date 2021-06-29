@@ -1,6 +1,6 @@
 import os
 
-from utils import get_images, get_id, get_formats
+from utils import get_images, get_id, get_formats_for_hc, get_formats_for_hi
 from urllib.parse import urlparse
 from PIL import Image
 import requests
@@ -9,8 +9,8 @@ def get_hubble_collection(Hubble_collection):
 
     filename = 'hc'
     url = f'http://hubblesite.org/api/v3/images/{Hubble_collection}'
-    images_formats = get_formats(url)
     all_id = get_id(url)
+    images_formats = get_formats_for_hc(url, all_id)
 
     for image_id in all_id:
         url = f"http://hubblesite.org/api/v3/image/{image_id}"
@@ -29,7 +29,7 @@ def get_hubble_images(image_id):
 
     filename = 'hi'
     url = f'http://hubblesite.org/api/v3/image/{image_id}'
-    images_formats = get_formats(url)
+    images_formats = get_formats_for_hi(url)
 
     response = requests.get(url)
     response.raise_for_status()

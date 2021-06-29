@@ -2,6 +2,7 @@ import argparse
 import os
 
 from fetch_hubble import get_hubble_collection, get_hubble_images
+from utils import get_cropped_images_for_inst
 from fetch_spacex import fetch_spacex_last_launch
 from instabot import Bot
 from PIL import Image
@@ -15,6 +16,15 @@ if __name__ == '__main__':
     parser.add_argument('-ip', '--Instagram_post', action='store_true', help='Постит картинки в инсту')
     args = parser.parse_args()
 
+    main_folder = "images"
+    second_folder = "cropped_images"
+
+    if not os.path.exists(main_folder):
+        os.makedirs(main_folder)
+
+    if not os.path.exists(second_folder):
+        os.makedirs(second_folder)
+
     if args.SpaceX:
         fetch_spacex_last_launch()
     elif args.Hubble_id:
@@ -24,9 +34,10 @@ if __name__ == '__main__':
         Hubble_collection = args.Hubble_collection
         get_hubble_collection(Hubble_collection)
     elif args.Instagram_post:
+        get_cropped_images_for_inst()
         bot = Bot()
         bot.login(username=os.getenv("USERNAME"), password=os.getenv("PASSWORD"))
-        for pic in os.listdir('images'):
-            bot.upload_photo(f"images/{pic}")
+        for pic in os.listdir(second_folder):
+            bot.upload_photo(f"{second_folder}/{pic}")
     else:
         print("Введите 1 из аргументов")
