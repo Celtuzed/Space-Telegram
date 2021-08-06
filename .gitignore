@@ -4,3 +4,4 @@ images/
 config/
 images/
 cropped_images/
+__pycache__/

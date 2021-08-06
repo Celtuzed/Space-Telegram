@@ -1,8 +1,8 @@
 import os
 
-from PIL import Image
 import requests
-#Скачивает картинки с последнего запуска ракет от SpaceX
+
+
 def fetch_spacex_last_launch():
 
     filename = 'sx'
