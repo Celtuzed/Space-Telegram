@@ -21,7 +21,8 @@ if __name__ == '__main__':
 
 
     main_folder = "images"
-
+    tg_token = os.getenv("TG_BOT_API_KEY")
+    
     os.makedirs(main_folder, exist_ok=True)
 
     if args.SpaceX:
@@ -31,7 +32,6 @@ if __name__ == '__main__':
     elif args.APOD_NASA:
         fetch_nasa_apod()
     elif args.Telegram:
-        tg_token = os.getenv("TG_BOT_API_KEY")
         upload_images(tg_token)
     else:
         print("Введите 1 из аргументов")
