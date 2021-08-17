@@ -10,6 +10,6 @@ def upload_images(tg_token, main_folder):
     updates = bot.get_updates()
 
     for image_name in os.listdir(main_folder):
-        image = os.listdir("images")[image_number]
-        bot.send_document(document = open(f'images/{image_name}','rb'), chat_id = "@space_tg_bot")
-        time.sleep(5)
+        with open(f"{main_folder}/{image_name}", "rb") as document:
+            bot.send_document(document = document, chat_id = "@space_tg_bot")
+            time.sleep(86400)

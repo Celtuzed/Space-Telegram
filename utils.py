@@ -6,18 +6,18 @@ from urllib.parse import unquote, urlsplit
 import requests
 
 
-def get_images(link, path):
+def get_images(link, path, params):
 
-    response = requests.get(link, verify=False)
+    response = requests.get(link, params, verify=False)
     response.raise_for_status()
 
-    with open(path, 'wb') as file:
+    with open(path, "wb") as file:
         file.write(response.content)
 
 
-def get_formats_and_filenames():
+def get_formats_and_filenames(nasa_api_key):
 
-    links = get_images_urls()
+    links = get_images_urls(nasa_api_key)
 
     filenames = []
     formats = []
@@ -36,9 +36,8 @@ def get_dates():
     return today, a_month_ago
 
 
-def get_params():
+def get_params(nasa_api_key):
 
-    nasa_api_key = os.getenv('NASA_API_KEY')
     params = {
         "api_key" : nasa_api_key,
         "start_date" : get_dates()[1],
@@ -48,11 +47,11 @@ def get_params():
     return params
 
 
-def get_images_urls():
+def get_images_urls(nasa_api_key):
 
     links = []
 
-    params = get_params()
+    params = get_params(nasa_api_key)
     url = "https://api.nasa.gov/planetary/apod"
     response = requests.get(url, params)
     all_urls = response.json()

@@ -2,10 +2,12 @@ import os
 
 import requests
 
+from utils import get_images
 
-def fetch_spacex_last_launch():
 
-    filename = 'sx'
+def fetch_spacex_last_launch(main_folder):
+
+    filename = "sx"
     url = "https://api.spacexdata.com/v3/launches/latest"
 
     response = requests.get(url)
@@ -15,10 +17,6 @@ def fetch_spacex_last_launch():
     images_links = all_links["flickr_images"]
 
     if images_links:
-        for image_number, images in enumerate(images_links):
-            response = requests.get(images)
-            response.raise_for_status()
-            with open(f'images/{filename}_{image_number}.jpeg', 'wb') as file:
-                file.write(response.content)
-    else:
-        print("С последнего запуска нет картинок")
+        for image_number, link in enumerate(images_links):
+            path = f"{main_folder}/{filename}_{image_number}.jpeg"
+            get_images()
