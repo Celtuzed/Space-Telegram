@@ -15,9 +15,7 @@ def get_images(link, path, params):
         file.write(response.content)
 
 
-def get_formats_and_filenames(nasa_api_key):
-
-    links = get_images_urls(nasa_api_key)
+def get_formats_and_filenames(nasa_api_key, links):
 
     filenames = []
     formats = []
