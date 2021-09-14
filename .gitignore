@@ -5,3 +5,4 @@ config/
 images/
 cropped_images/
 __pycache__/
+test_file.py
