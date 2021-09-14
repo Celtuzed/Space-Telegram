@@ -10,3 +10,8 @@ def download_image(link, path, params=None):
         file.write(response.content)
 
 
+def check_status(response):
+    if response.raise_for_status():
+        raise requests.HTTPError
+    elif "error" in response.json():
+        raise requests.exceptions.HTTPError(response.json()['error'])

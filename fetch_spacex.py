@@ -9,7 +9,7 @@ def fetch_spacex_last_launch(main_folder):
     url = "https://api.spacexdata.com/v3/launches/latest"
 
     response = requests.get(url)
-    response.raise_for_status()
+    check_status(response)
 
     all_links = response.json()["links"]
     images_links = all_links["flickr_images"]

@@ -13,13 +13,13 @@ def fetch_nasa_apod(main_folder, nasa_api_key):
     url = "https://api.nasa.gov/planetary/apod"
 
     response = requests.get(url, params)
+    check_status(response)
 
     links = []
     all_urls = response.json()
     for url in all_urls:
         links.append(url["url"])
 
-    response.raise_for_status()
     for number, link in enumerate(links):
         format, filename = get_format_and_filename(link)
         if format == ".jpg":
@@ -35,6 +35,7 @@ def fetch_nasa_epic(main_folder, nasa_api_key):
     url = "https://api.nasa.gov/EPIC/api/natural/images"
 
     response = requests.get(url, params)
+    check_status(response)
     epic_images = response.json()
 
     for number, epic_image in enumerate(epic_images):
