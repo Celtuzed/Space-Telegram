@@ -1,8 +1,6 @@
-import os
-
 import requests
 
-from utils import get_images
+from utils import download_image, check_status
 
 
 def fetch_spacex_last_launch(main_folder):
@@ -19,4 +17,4 @@ def fetch_spacex_last_launch(main_folder):
     if images_links:
         for image_number, link in enumerate(images_links):
             path = f"{main_folder}/{filename}_{image_number}.jpeg"
-            get_images()
+            download_image(link, path)
