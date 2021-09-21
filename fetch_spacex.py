@@ -1,6 +1,6 @@
 import requests
 
-from utils import download_image, check_status
+from download_image import download_image
 
 
 def fetch_spacex_last_launch(main_folder):
@@ -9,7 +9,7 @@ def fetch_spacex_last_launch(main_folder):
     url = "https://api.spacexdata.com/v3/launches/latest"
 
     response = requests.get(url)
-    check_status(response)
+    response.raise_for_status()
 
     all_links = response.json()["links"]
     images_links = all_links["flickr_images"]
